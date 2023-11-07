@@ -1,4 +1,7 @@
 using API.Data;
+using API.Data.Repositories;
+using API.Data.Repositories.Interfaces;
+using API.Models;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -18,6 +21,9 @@ builder.Services.AddCors(options => {
 builder.Services.AddDbContext<CompanyContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("CompanyDatabase")));
 
 // Add services to the container.
+builder.Services.AddScoped<IRepository<Employee>, EmployeeRepository>();
+builder.Services.AddScoped<IRepository<Department>, DepartmentRepository>();
+
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -41,3 +47,4 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.Run();
+
